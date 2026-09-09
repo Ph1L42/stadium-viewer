@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blockwerk</title>
+<link rel="stylesheet" href="/src/ui/style.css">
+</head>
+<body>
+<div id="top" class="ui">
+  <span class="brand">Blockwerk</span>
+  <button id="mPaint" class="on">Malen</button>
+  <button id="mOrbit">Umsehen</button>
+</div>
+<div id="cams" class="ui"></div>
+<div id="tools" class="ui" aria-label="Papierfarben"></div>
+<div id="scene" class="ui">
+  <label>Beteiligung <span id="partV">86 %</span></label>
+  <input id="part" type="range" min="40" max="100" value="86">
+  <label>Pinsel <span id="brushV">6 Sitze</span></label>
+  <input id="brush" type="range" min="1" max="20" value="6">
+  <label>Sitzfarbe</label>
+  <div class="row" id="seatCols"></div>
+  <label>Licht</label>
+  <div class="row"><button id="lTag" class="on">Tag</button><button id="lNacht">Nacht</button></div>
+  <div class="row" style="margin-top:8px"><button id="clear">Leeren</button><button id="demo">Motiv laden</button></div>
+</div>
+<div id="stats" class="ui"></div>
+<div id="hint" class="ui">Ziehen = malen · Alt halten = drehen · Rad = zoom · rechte Taste = verschieben</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
