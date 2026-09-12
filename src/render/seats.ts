@@ -11,6 +11,11 @@ function seatGeometry() {
   return g;
 }
 
+/** Die Sitzschale ist für diese Reihenteilung modelliert; engere Plätze werden schmaler skaliert. */
+const BASE_PITCH = 0.5;
+/** Stehplatz = hochgeklappter Klappsitz: flach an der Lehne, Blatt auf Stehhöhe. */
+const FOLDED_Y = 0.35, PAPER_Y = { sit: 0.55, stand: 1.0 } as const;
+
 /** Instanzierte Sitze plus instanzierte Papierblätter (unsichtbar = Skalierung 0). */
 export class SeatMeshes {
   readonly seatMesh: THREE.InstancedMesh;
@@ -25,8 +30,11 @@ export class SeatMeshes {
     this.seatMesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(N * 3), 3);
     this.paperMesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(N * 3), 3);
     this.paperMat = seats.map((s, i) => {
-      d.position.set(s.x, s.y, s.z); d.rotation.set(0, s.rot, 0); d.updateMatrix(); this.seatMesh.setMatrixAt(i, d.matrix);
-      d.position.set(s.x, s.y + 0.55, s.z); d.rotateX(-0.35); d.updateMatrix(); return d.matrix.clone();
+      const w = s.pitch / BASE_PITCH;
+      d.position.set(s.x, s.y, s.z); d.rotation.set(0, s.rot, 0);
+      d.scale.set(w, s.standing ? FOLDED_Y : 1, 1); d.updateMatrix(); this.seatMesh.setMatrixAt(i, d.matrix);
+      d.position.set(s.x, s.y + (s.standing ? PAPER_Y.stand : PAPER_Y.sit), s.z);
+      d.scale.set(w, 1, 1); d.rotateX(-0.35); d.updateMatrix(); return d.matrix.clone();
     });
   }
 

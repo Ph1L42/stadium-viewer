@@ -7,8 +7,8 @@ export const PRESETS: Record<string, CamPreset & { label: string }> = {
   gegen: { label: "Gegengerade",   theta: Math.PI,        phi: 1.45, r: 98,  target: [0, 12, -46] },
   tor:   { label: "Hintertor",     theta: Math.PI / 2,    phi: 1.35, r: 150, target: [0, 8, -20] },
   sitz:  { label: "Aus dem Block", theta: Math.PI * 0.62, phi: 1.42, r: 60,  target: [20, 10, -40] },
-  oben:  { label: "Von oben",      theta: Math.PI,        phi: 0.02, r: 330, target: [0, 0, 0] },
-  frei:  { label: "Frei",          theta: Math.PI * 0.72, phi: 0.78, r: 250, target: [0, 0, 0] },
+  oben:  { label: "Von oben",      theta: Math.PI,        phi: 0.02, r: 390, target: [0, 0, 0] },
+  frei:  { label: "Frei",          theta: Math.PI * 0.72, phi: 0.78, r: 285, target: [0, 0, 0] },
 };
 
 const ease = (t: number) => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;

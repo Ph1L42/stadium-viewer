@@ -37,6 +37,25 @@ export function facing(P: StadiumParams, u: number, off: number): number {
   return Math.atan2(tz, -tx);
 }
 
+/** u-Position, ab der die Blocknummern eines Rangs hochgezählt werden. */
+export function blockAnchorU(P: StadiumParams, off: number, anchor: "corner" | "center"): number {
+  if (anchor === "center") return 0;
+  const a = P.pitchL / 2 + P.margin + off, r = P.corner + off;
+  return (a - r) / bowlPoint(P, 0, off).per;
+}
+
+/**
+ * Blocknummern eines Rangs: vom Anker aus gegen den Umlaufsinn durchnummeriert,
+ * genau wie im Blockplan. mids sind die u-Mitten der Blöcke in Umlaufreihenfolge.
+ */
+export function blockNumbers(mids: number[], first: number, anchorU: number): number[] {
+  const key = mids.map(u => (((anchorU - u) % 1) + 1) % 1);
+  const order = [...key.keys()].sort((a, b) => key[a]! - key[b]!);
+  const num = new Array<number>(mids.length);
+  order.forEach((idx, rank) => { num[idx] = first + rank; });
+  return num;
+}
+
 /** Stufenprofil des gesamten Rangs, von der ersten Reihe bis zum oberen Umlauf. */
 export function buildSteps(P: StadiumParams): Step[] {
   const steps: Step[] = [];

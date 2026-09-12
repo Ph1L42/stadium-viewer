@@ -14,12 +14,15 @@ export class Choreo {
   private readonly rnd: Float32Array;
   readonly paperCol = PAPER.map(p => new THREE.Color(p.hex));
   seatBase = new THREE.Color("#c8322c");
+  /** Anteil Stehplätze, einmal gezählt — renderStats läuft bei jedem Pinselstrich. */
+  readonly standingCount: number;
   participation = 0.86;
   private tmp = new THREE.Color();
 
   constructor(readonly seats: Seat[], readonly meshes: SeatMeshes) {
     this.paint = new Int8Array(seats.length).fill(-1);
     this.rnd = new Float32Array(seats.length).map(() => Math.random());
+    this.standingCount = seats.reduce((n, s) => n + (s.standing ? 1 : 0), 0);
   }
 
   private seatColor(i: number) {

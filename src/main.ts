@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { arenaNord } from "./stadium/presets";
+import { STADIUMS, DEFAULT_STADIUM } from "./stadium/presets";
 import { buildSteps, buildAisleLines } from "./stadium/bowl";
 import { buildSeats } from "./stadium/seats";
 import { buildPitch, buildStand, buildShell, buildStairs, buildBoxes, buildVomitoria, buildRail } from "./render/stadium";
@@ -9,7 +9,7 @@ import { createRenderer, createLighting, setNight } from "./render/scene";
 import { Choreo } from "./paint/paint";
 import { mountUi, renderStats } from "./ui/ui";
 
-const P = arenaNord;
+const P = STADIUMS[DEFAULT_STADIUM];
 const steps = buildSteps(P), aisles = buildAisleLines(P, steps), { seats, vomLines } = buildSeats(P, steps, aisles);
 
 const renderer = createRenderer(); document.body.appendChild(renderer.domElement);

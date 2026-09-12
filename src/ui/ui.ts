@@ -51,7 +51,10 @@ export function mountUi(h: UiHandlers) {
 
 export function renderStats(choreo: Choreo) {
   const { cnt, total } = choreo.counts(), de = (n: number) => n.toLocaleString("de");
+  const steh = choreo.standingCount, sitz = choreo.seats.length - steh;
   let html = `<div class="row"><span>Plätze</span><b>${de(choreo.seats.length)}</b></div>`;
+  html += `<div class="row sub"><span>davon Sitzplätze</span><b>${de(sitz)}</b></div>`;
+  if (steh) html += `<div class="row sub"><span>davon Stehplätze</span><b>${de(steh)}</b></div>`;
   PAPER.forEach((p, i) => { if (cnt[i]) html += `<div class="row"><span><i class="dot" style="background:${p.hex}"></i>${p.name}</span><b>${de(cnt[i]!)}</b></div>`; });
   html += `<div class="row" style="border-top:.5px solid var(--line);margin-top:4px;padding-top:4px"><span>Blätter</span><b>${de(total)}</b></div>`;
   html += `<div class="row"><span>Material ≈</span><b>${de(Math.round(total * 0.15))} €</b></div>`;

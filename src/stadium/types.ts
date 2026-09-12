@@ -10,7 +10,29 @@ export interface Tier {
   /** Steigung in Grad */
   rake: number;
   blocks: BlockLayout;
+  /** Kleinste Blocknummer des Rangs, z. B. 101 / 201 / 301. */
+  blockFirst: number;
+  /**
+   * Wo die Nummerierung ansetzt. Von dort laufen die Nummern gegen den Umlaufsinn
+   * der Kurve — im Blockplan also nach links.
+   * "corner" = Ecke Nordseite/Ostkurve, "center" = Mitte der Nordseite.
+   */
+  blockAnchor: "corner" | "center";
   logen?: boolean;
+}
+
+/**
+ * Stehplatzbereich: zusammenhängende Blöcke einer Torseite, in denen die Sitze
+ * hochgeklappt sind und die Leute dichter stehen. Modellachsen: n/s sind die
+ * Längsseiten, die Kurven hinter den Toren liegen auf e/w.
+ */
+export interface StandingSector {
+  name: string;
+  tier: number;
+  /** Blocknummern von…bis einschließlich, wie im Blockplan */
+  blocks: [number, number];
+  /** Platzabstand entlang der Reihe; enger als seatPitch */
+  pitch: number;
 }
 
 export interface StadiumParams {
@@ -25,6 +47,7 @@ export interface StadiumParams {
   rowDepth: number;
   aisleWidth: number;
   tiers: Tier[];
+  standing?: StandingSector[];
 }
 
 export type StepKind = "row" | "walk";
@@ -49,6 +72,12 @@ export interface Seat {
   /** Blickrichtung als rotation.y */
   rot: number;
   north: boolean;
+  /** Blocknummer laut Blockplan */
+  block: number;
+  /** Platzabstand entlang der Reihe an dieser Stelle */
+  pitch: number;
+  /** Stehplatz statt Sitzplatz */
+  standing: boolean;
 }
 
 export interface AisleLine {
